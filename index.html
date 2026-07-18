@@ -159,25 +159,15 @@ section[id]{scroll-margin-top:72px}
 .diploma .year{font-family:var(--display);font-size:22px;color:var(--accent);display:block;margin-bottom:2px}
 .diploma p{font-size:14.5px;color:var(--ink-soft)}
 
-.gallery-scroll{position:relative}
-.gallery-grid{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:6px}
-.gallery-grid::-webkit-scrollbar{display:none}
-.gallery-item{flex:0 0 calc(33.33% - 11px);min-width:260px;position:relative;border-radius:6px;overflow:hidden;
-  aspect-ratio:4/3;background:var(--surface-2);border:1px solid var(--line-soft);scroll-snap-align:start;
-  transition:border-color .3s,transform .3s,box-shadow .3s;cursor:pointer}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.gallery-item{position:relative;border-radius:6px;overflow:hidden;aspect-ratio:4/3;
+  background:var(--surface-2);border:1px solid var(--line-soft);cursor:pointer;
+  transition:border-color .3s,transform .3s,box-shadow .3s}
 .gallery-item:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.06)}
 .gallery-item img{width:100%;height:100%;object-fit:cover;display:block}
 .gallery-item .ph{text-align:center;color:var(--ink-soft);padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%}
 .gallery-item .ph svg{width:36px;height:36px;opacity:.3;stroke:var(--accent);margin-bottom:8px}
 .gallery-item .ph small{font-size:11.5px;display:block;line-height:1.4}
-
-.gallery-nav{display:flex;justify-content:center;gap:10px;margin-top:18px}
-.gallery-nav button{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);
-  background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;
-  color:var(--ink-soft);transition:border-color .2s,color .2s,background .2s;font-size:18px}
-.gallery-nav button:hover{border-color:var(--accent);color:var(--accent);background:var(--surface-2)}
-.gallery-nav button:active{transform:scale(.95)}
 
 .price-cols{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;max-width:800px}
 .price-card{background:var(--surface);border:1px solid var(--line-soft);border-radius:10px;padding:34px 32px;transition:border-color .3s,box-shadow .3s}
@@ -192,10 +182,6 @@ section[id]{scroll-margin-top:72px}
 .price-row .val{font-family:var(--display);font-size:25px;color:var(--accent);white-space:nowrap}
 
 @media(max-width:640px){.price-cols{grid-template-columns:1fr}}
-
-@media(max-width:860px){
-  .gallery-item{flex:0 0 80%;min-width:0}
-}
 
 .sec-cta{background:var(--surface-2);text-align:center;padding:88px 0;position:relative;overflow:hidden;
   border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -236,12 +222,17 @@ footer{background:var(--bg-warm);color:var(--ink-soft);padding:36px 0;border-top
 .gallery-item{cursor:pointer}
 
 .lightbox{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;
-  background:rgba(20,18,16,.9);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:20px}
+  background:rgba(20,18,16,.92);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);padding:20px}
 .lightbox.open{display:flex}
-.lightbox img{max-width:95vw;max-height:95vh;object-fit:contain;border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.lightbox img{max-width:85vw;max-height:90vh;object-fit:contain;border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
 .lightbox .close{position:absolute;top:20px;right:28px;width:44px;height:44px;border:none;background:rgba(255,255,255,.08);
-  border-radius:50%;cursor:pointer;color:#fff;font-size:24px;display:flex;align-items:center;justify-content:center;transition:background .2s}
+  border-radius:50%;cursor:pointer;color:#fff;font-size:24px;display:flex;align-items:center;justify-content:center;transition:background .2s;z-index:2}
 .lightbox .close:hover{background:rgba(255,255,255,.16)}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;border:none;
+  background:rgba(255,255,255,.06);border-radius:50%;cursor:pointer;color:#fff;font-size:32px;
+  display:flex;align-items:center;justify-content:center;transition:background .2s;z-index:2}
+.lb-nav:hover{background:rgba(255,255,255,.14)}
+.lb-prev{left:20px}.lb-next{right:20px}
 
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
 @media(prefers-reduced-motion:reduce){
@@ -336,27 +327,21 @@ footer{background:var(--bg-warm);color:var(--ink-soft);padding:36px 0;border-top
       <h2>Мои картины</h2>
     </div>
 
-    <div class="gallery-scroll reveal">
-      <div class="gallery-grid" id="works-gallery">
-        <div class="gallery-item"><img src="Photo/ksenia-works/painting1.jpg" alt="Работа Ксении" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/ksenia-works/painting2.jpg" alt="Работа Ксении" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/ksenia-works/painting3.jpg" alt="Работа Ксении" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/ksenia-works/painting4.jpg" alt="Работа Ксении" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/ksenia-works/painting5.jpg" alt="Работа Ксении" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/ksenia-works/painting6.jpg" alt="Работа Ксении" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/ksenia-works/painting7.jpg" alt="Работа Ксении" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/ksenia-works/painting8.jpg" alt="Работа Ксении" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/ksenia-works/IMG_20181023_000824.jpg" alt="Работа Ксении" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/ksenia-works/kBFD-eRiTos.jpg" alt="Работа Ксении" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/ksenia-works/m2oWc0sxbko.jpg" alt="Работа Ксении" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/ksenia-works/PMpo8xGVEIQ.jpg" alt="Работа Ксении" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/ksenia-works/PxSrbsYR7m4.jpg" alt="Работа Ксении" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/ksenia-works/xWz_YXRBLjQ.jpg" alt="Работа Ксении" loading="lazy"></div>
-      </div>
-      <div class="gallery-nav">
-        <button class="gal-prev" data-gallery="works-gallery" aria-label="Назад">←</button>
-        <button class="gal-next" data-gallery="works-gallery" aria-label="Вперёд">→</button>
-      </div>
+    <div class="gallery-grid reveal">
+      <div class="gallery-item"><img src="Photo/ksenia-works/painting1.jpg" alt="Работа Ксении" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/ksenia-works/painting2.jpg" alt="Работа Ксении" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/ksenia-works/painting3.jpg" alt="Работа Ксении" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/ksenia-works/painting4.jpg" alt="Работа Ксении" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/ksenia-works/painting5.jpg" alt="Работа Ксении" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/ksenia-works/painting6.jpg" alt="Работа Ксении" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/ksenia-works/painting7.jpg" alt="Работа Ксении" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/ksenia-works/painting8.jpg" alt="Работа Ксении" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/ksenia-works/IMG_20181023_000824.jpg" alt="Работа Ксении" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/ksenia-works/kBFD-eRiTos.jpg" alt="Работа Ксении" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/ksenia-works/m2oWc0sxbko.jpg" alt="Работа Ксении" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/ksenia-works/PMpo8xGVEIQ.jpg" alt="Работа Ксении" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/ksenia-works/PxSrbsYR7m4.jpg" alt="Работа Ксении" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/ksenia-works/xWz_YXRBLjQ.jpg" alt="Работа Ксении" loading="lazy"></div>
     </div>
   </div>
 </section>
@@ -370,30 +355,24 @@ footer{background:var(--bg-warm);color:var(--ink-soft);padding:36px 0;border-top
       <p class="lead">Очень люблю, когда человек раскрывается через творчество и обретает радость</p>
     </div>
 
-    <div class="gallery-scroll reveal">
-      <div class="gallery-grid" id="students-gallery">
-        <div class="gallery-item"><img src="Photo/students-works/IMG_20181014_185627.jpg" alt="Работа ученика" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/students-works/IMG_20181104_190100.jpg" alt="Работа ученика" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/students-works/IMG_20181104_191108.jpg" alt="Работа ученика" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/students-works/IMG_20181111_182959.jpg" alt="Работа ученика" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/students-works/IMG_20181111_184543.jpg" alt="Работа ученика" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/students-works/IMG_20181111_185032.jpg" alt="Работа ученика" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/students-works/IMG_20181111_185336.jpg" alt="Работа ученика" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/students-works/IMG_20181111_192231.jpg" alt="Работа ученика" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/students-works/IMG_20181202_191150.jpg" alt="Работа ученика" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/students-works/IMG_20181202_193236.jpg" alt="Работа ученика" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/students-works/IMG_20181202_193751.jpg" alt="Работа ученика" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/students-works/IMG_20181202_194847.jpg" alt="Работа ученика" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/students-works/IMG_20181209_205239.jpg" alt="Работа ученика" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/students-works/IMG_20181216_193716.jpg" alt="Работа ученика" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/students-works/IMG_20181216_193723.jpg" alt="Работа ученика" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/students-works/IMG_20181216_195419.jpg" alt="Работа ученика" loading="lazy"></div>
-        <div class="gallery-item"><img src="Photo/students-works/IMG_20181216_200024.jpg" alt="Работа ученика" loading="lazy"></div>
-      </div>
-      <div class="gallery-nav">
-        <button class="gal-prev" data-gallery="students-gallery" aria-label="Назад">←</button>
-        <button class="gal-next" data-gallery="students-gallery" aria-label="Вперёд">→</button>
-      </div>
+    <div class="gallery-grid reveal">
+      <div class="gallery-item"><img src="Photo/students-works/IMG_20181014_185627.jpg" alt="Работа ученика" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/students-works/IMG_20181104_190100.jpg" alt="Работа ученика" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/students-works/IMG_20181104_191108.jpg" alt="Работа ученика" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/students-works/IMG_20181111_182959.jpg" alt="Работа ученика" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/students-works/IMG_20181111_184543.jpg" alt="Работа ученика" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/students-works/IMG_20181111_185032.jpg" alt="Работа ученика" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/students-works/IMG_20181111_185336.jpg" alt="Работа ученика" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/students-works/IMG_20181111_192231.jpg" alt="Работа ученика" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/students-works/IMG_20181202_191150.jpg" alt="Работа ученика" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/students-works/IMG_20181202_193236.jpg" alt="Работа ученика" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/students-works/IMG_20181202_193751.jpg" alt="Работа ученика" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/students-works/IMG_20181202_194847.jpg" alt="Работа ученика" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/students-works/IMG_20181209_205239.jpg" alt="Работа ученика" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/students-works/IMG_20181216_193716.jpg" alt="Работа ученика" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/students-works/IMG_20181216_193723.jpg" alt="Работа ученика" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/students-works/IMG_20181216_195419.jpg" alt="Работа ученика" loading="lazy"></div>
+      <div class="gallery-item"><img src="Photo/students-works/IMG_20181216_200024.jpg" alt="Работа ученика" loading="lazy"></div>
     </div>
   </div>
 </section>
@@ -440,9 +419,11 @@ footer{background:var(--bg-warm);color:var(--ink-soft);padding:36px 0;border-top
   </div>
 </section>
 
-<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()" role="dialog" aria-modal="true" aria-label="Просмотр фото">
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр фото">
   <button class="close" onclick="closeLightbox()" aria-label="Закрыть">&times;</button>
+  <button class="lb-nav lb-prev" id="lb-prev" aria-label="Предыдущее">‹</button>
   <img id="lightbox-img" src="" alt="">
+  <button class="lb-nav lb-next" id="lb-next" aria-label="Следующее">›</button>
 </div>
 
 <footer>
@@ -478,28 +459,39 @@ var siteHeader = document.querySelector('.site-header');
 window.addEventListener('scroll', function(){ if(siteHeader){ siteHeader.classList.toggle('scrolled', window.scrollY > 10); } }, { passive:true });
 
 var lb = document.getElementById('lightbox'), lbImg = document.getElementById('lightbox-img');
-function openLightbox(src){ lbImg.src = src; lb.classList.add('open'); document.body.style.overflow = 'hidden'; }
-function closeLightbox(){ lb.classList.remove('open'); lbImg.src = ''; document.body.style.overflow = ''; }
-document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLightbox(); });
-document.querySelectorAll('.gallery-item img').forEach(function(img){
-  img.addEventListener('click', function(){ openLightbox(this.src); });
-});
-
-document.querySelectorAll('.gal-prev, .gal-next').forEach(function(btn){
-  btn.addEventListener('click', function(){
-    var id = this.getAttribute('data-gallery');
-    var gallery = document.getElementById(id);
-    if(!gallery) return;
-    var itemWidth = gallery.querySelector('.gallery-item');
-    if(!itemWidth) return;
-    var scrollAmount = itemWidth.offsetWidth + 16;
-    if(this.classList.contains('gal-prev')){
-      gallery.scrollBy({left: -scrollAmount, behavior: 'smooth'});
-    } else {
-      gallery.scrollBy({left: scrollAmount, behavior: 'smooth'});
-    }
+var lbImages = [];
+document.querySelectorAll('.gallery-grid .gallery-item img').forEach(function(img){
+  lbImages.push(img.src);
+  img.addEventListener('click', function(){
+    lb.currentIdx = lbImages.indexOf(this.src);
+    openLightbox(this.src);
   });
 });
+
+function openLightbox(src){
+  lbImg.src = src;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('lb-prev').style.display = lbImages.length > 1 ? 'flex' : 'none';
+  document.getElementById('lb-next').style.display = lbImages.length > 1 ? 'flex' : 'none';
+}
+function closeLightbox(){ lb.classList.remove('open'); lbImg.src = ''; document.body.style.overflow = ''; }
+function lbNavigate(dir){
+  var idx = lb.currentIdx + dir;
+  if(idx < 0) idx = lbImages.length - 1;
+  if(idx >= lbImages.length) idx = 0;
+  lb.currentIdx = idx;
+  lbImg.src = lbImages[idx];
+}
+document.addEventListener('keydown', function(e){
+  if(!lb.classList.contains('open')) return;
+  if(e.key === 'Escape') closeLightbox();
+  if(e.key === 'ArrowLeft') lbNavigate(-1);
+  if(e.key === 'ArrowRight') lbNavigate(1);
+});
+document.getElementById('lb-prev').addEventListener('click', function(){ lbNavigate(-1); });
+document.getElementById('lb-next').addEventListener('click', function(){ lbNavigate(1); });
+lb.addEventListener('click', function(e){ if(e.target === this) closeLightbox(); });
 </script>
 </body>
 </html>
