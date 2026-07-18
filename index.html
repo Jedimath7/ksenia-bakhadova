@@ -465,30 +465,35 @@ var siteHeader = document.querySelector('.site-header');
 window.addEventListener('scroll', function(){ if(siteHeader){ siteHeader.classList.toggle('scrolled', window.scrollY > 10); } }, { passive:true });
 
 var lb = document.getElementById('lightbox'), lbImg = document.getElementById('lightbox-img');
-var lbImages = [];
-document.querySelectorAll('.gallery-grid .gallery-item img').forEach(function(img){
-  lbImages.push(img.src);
-  img.addEventListener('click', function(){
-    lb.currentIdx = lbImages.indexOf(this.src);
-    openLightbox(this.src);
-  });
-});
 
-function openLightbox(src){
+function openLightbox(src, images){
+  lb.currentIdx = images.indexOf(src);
+  lb.images = images;
   lbImg.src = src;
   lb.classList.add('open');
   document.body.style.overflow = 'hidden';
-  document.getElementById('lb-prev').style.display = lbImages.length > 1 ? 'flex' : 'none';
-  document.getElementById('lb-next').style.display = lbImages.length > 1 ? 'flex' : 'none';
+  var hasNav = images.length > 1;
+  document.getElementById('lb-prev').style.display = hasNav ? 'flex' : 'none';
+  document.getElementById('lb-next').style.display = hasNav ? 'flex' : 'none';
 }
 function closeLightbox(){ lb.classList.remove('open'); lbImg.src = ''; document.body.style.overflow = ''; }
 function lbNavigate(dir){
+  var imgs = lb.images;
   var idx = lb.currentIdx + dir;
-  if(idx < 0) idx = lbImages.length - 1;
-  if(idx >= lbImages.length) idx = 0;
+  if(idx < 0) idx = imgs.length - 1;
+  if(idx >= imgs.length) idx = 0;
   lb.currentIdx = idx;
-  lbImg.src = lbImages[idx];
+  lbImg.src = imgs[idx];
 }
+
+document.querySelectorAll('.gallery-grid .gallery-item img').forEach(function(img){
+  img.addEventListener('click', function(){
+    var grid = this.closest('.gallery-grid');
+    var imgs = [];
+    grid.querySelectorAll('img').forEach(function(g){ imgs.push(g.src); });
+    openLightbox(this.src, imgs);
+  });
+});
 document.addEventListener('keydown', function(e){
   if(!lb.classList.contains('open')) return;
   if(e.key === 'Escape') closeLightbox();
